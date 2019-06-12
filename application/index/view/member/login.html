@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<head>
+	{include file="public/head" /}
+
+	<link rel="stylesheet" type="text/css" href="__STATIC__/index/styles/main_styles.css">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/index/styles/cart.css">
+	<link href="__STATIC__/index/styles/style.css" rel='stylesheet' type='text/css' />
+
+</head>
+<html>
+<style>
+	/*body {*/
+		/*background-image: url(__STATIC__/index/my_images/bg.jpg);*/
+	/*}*/
+	/*.address span {*/
+		/*color:white;*/
+	/*}*/
+</style>
+<body>
+ <!--start-content-->
+<!--account-->
+ {include file="public/menu" /}
+
+ <div class="account" style="height:600px;width: 1000px;margin-left: 350px;">
+	 <div class="container">
+		 <div class="col-md-5 account-left">
+					<form class="form-horizontal">
+						<div class="account-top heading">
+							<h3>登录</h3>
+						</div>
+						<div class="address">
+							<span>手机/邮箱</span>
+							<input type="text" id="phone" name="phone" placeholder="请输入手机或邮箱">
+						</div>
+						<div class="address">
+							<span>用户密码</span>
+							<input type="password" id="password" name="password" placeholder="请输入密码">
+						</div>
+						<div class="button button_update trans_200">
+							<a href="" id="submit" style="font-size: 19px">登录</a>
+						</div>
+					</form>
+		 </div>
+	 </div>
+ </div>
+
+
+
+<script>
+	$(function(){
+	    $('#submit').on('click',function(){
+	        $.ajax({
+				type:"POST",
+				url:"{:url('member/loginCheck')}",
+				data:$('form').serialize(),
+				dataType:"json",
+				success:function(data){
+				    if(data.status == 1){
+				       	window.location.href="{:url('index/index')}";
+					}else{
+                        layer.msg(data.message,{icon:2});
+					}
+				}
+			});
+	        return false;
+		});
+	});
+</script>
+</body>
+</html>

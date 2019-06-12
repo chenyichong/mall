@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--jquery-->
+    <script src="__STATIC__/index/js/jquery-3.2.1.min.js"></script>
+    <script src="__STATIC__/layer/layer.js"></script>
+
+    <!--bootstrap-->
+    <link href="__STATIC__/index/styles/bootstrap.css" rel='stylesheet' type='text/css' />
+    <script src="__STATIC__/index/js/bootstrap.js"> </script>
+</head>
+<body style="background-color: ghostwhite">
+<div style="margin-left: 80px;margin-top: 20px">
+    <form action="{:url('Goods/commentAdd')}" method="post" enctype="multipart/form-data">
+
+        <!--总体评价-->
+        <span style="margin-right: 20px">总体评价:</span>
+        <input type="radio" name="evaluation" value="好评" checked>好评
+        <input type="radio" name="evaluation" value="中评" style="margin-left: 30px">中评
+        <input type="radio" name="evaluation" value="差评" style="margin-left: 30px">差评
+
+        <!--购物体验-->
+        <textarea name="content" id="content" cols="50" rows="4" placeholder="可以在这里分享你的这次购物体验~~" style="margin-top: 20px"></textarea><br>
+
+        <!--上传图片-->
+        <div style="height: 70px;">
+            <!--上传按钮-->
+            <label id="label_1">
+                <input style="position:absolute;opacity:0;" type="file" name="image[]" id="upload_img_1" onchange="previewFile()" accept="image/gif,image/jpeg,image/x-png"/>
+                <img style="width: 80px;margin-top: 29px" id="upload_img_1_img" src="__STATIC__/index/images/upload.png">
+            </label>
+            <label id="label_2">
+                <input style="position:absolute;opacity:0;" type="file" name="image[]" id="upload_img_2" onchange="previewFile_2()" accept="image/gif,image/jpeg,image/x-png" />
+                <img style="width: 80px;margin-top: 29px" id="upload_img_2_img" src="__STATIC__/index/images/upload.png" hidden="hidden">
+            </label>
+            <label id="label_3">
+                <input style="position:absolute;opacity:0;" type="file" name="image[]" id="upload_img_3" onchange="previewFile_3()" accept="image/gif,image/jpeg,image/x-png" />
+                <img style="width: 80px;margin-top: 29px" id="upload_img_3_img" src="__STATIC__/index/images/upload.png" hidden="hidden">
+            </label>
+            <label id="label_4">
+                <input style="position:absolute;opacity:0;" type="file" name="image[]" id="upload_img_4" onchange="previewFile_4()" accept="image/gif,image/jpeg,image/x-png"/>
+                <img style="width: 80px;margin-top: 29px" id="upload_img_4_img" src="__STATIC__/index/images/upload.png" hidden="hidden">
+            </label>
+            <!--图片-->
+            <img src="" id="preview_1" style="width: 65px;height: 65px;margin-left: 1px;margin-right: 1px" hidden="hidden" >
+            <img src="" id="preview_2" style="width: 65px;height: 65px;margin-left: 1px;margin-right: 1px" hidden="hidden" >
+            <img src="" id="preview_3" style="width: 65px;height: 65px;margin-left: 1px;margin-right: 1px" hidden="hidden" >
+            <img src="" id="preview_4" style="width: 65px;height: 65px;margin-left: 1px;margin-right: 1px" hidden="hidden" >
+            <!--图片数量提示-->
+            <span style="position:relative;top: 20px" id="upload_img_0_tips">(0/4)</span>
+            <span style="position:relative;top: 20px" id="upload_img_1_tips" hidden="hidden">(1/4)</span>
+            <span style="position:relative;top: 20px" id="upload_img_2_tips" hidden="hidden">(2/4)</span>
+            <span style="position:relative;top: 20px" id="upload_img_3_tips" hidden="hidden">(3/4)</span>
+            <span style="position:relative;top: 20px" id="upload_img_4_tips" hidden="hidden">(4/4)</span>
+        </div>
+        <!--额外信息-->
+        <input type="text" name="goods_id" value="{$goods_id}" hidden>
+        <!--提交按钮-->
+        <button class="btn btn-success" id="submit" onclick="$('form').submit()" style="position: relative;left: 300px">提交</button>
+    </form>
+</div>
+
+
+<script>
+    function previewFile() {
+        var preview = document.querySelector('#preview_1');
+        var file    = document.querySelector('#upload_img_1').files[0];
+        var reader  = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "";
+        }
+    }
+</script>
+<script>
+    function previewFile_2() {
+        var preview = document.querySelector('#preview_2');
+        var file    = document.querySelector('#upload_img_2').files[0];
+        var reader  = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "";
+        }
+    }
+</script>
+<script>
+    function previewFile_3() {
+        var preview = document.querySelector('#preview_3');
+        var file    = document.querySelector('#upload_img_3').files[0];
+        var reader  = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "";
+        }
+    }
+</script>
+<script>
+    function previewFile_4() {
+        var preview = document.querySelector('#preview_4');
+        var file    = document.querySelector('#upload_img_4').files[0];
+        var reader  = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "";
+        }
+    }
+</script>
+<script>
+    $(function(){
+        $("#upload_img_1").change(function(){
+            $("#label_1").attr('hidden','hidden');
+            $("#upload_img_0_tips").attr('hidden','hidden');
+
+            $("#preview_1").removeAttr('hidden');
+            $("#upload_img_2").removeAttr('hidden');
+            $("#upload_img_2_img").removeAttr('hidden');
+            $("#upload_img_1_tips").removeAttr('hidden');
+        })
+    })
+</script>
+<script>
+    $(function(){
+        $("#upload_img_2").change(function(){
+            $("#label_2").attr('hidden','hidden');
+            $("#upload_img_1_tips").attr('hidden','hidden');
+
+            $("#preview_2").removeAttr('hidden');
+            $("#upload_img_3").removeAttr('hidden');
+            $("#upload_img_3_img").removeAttr('hidden');
+            $("#upload_img_2_tips").removeAttr('hidden');
+        })
+    })
+</script>
+<script>
+    $(function(){
+        $("#upload_img_3").change(function(){
+            $("#label_3").attr('hidden','hidden');
+            $("#upload_img_2_tips").attr('hidden','hidden');
+
+            $("#preview_3").removeAttr('hidden');
+            $("#upload_img_4").removeAttr('hidden');
+            $("#upload_img_4_img").removeAttr('hidden');
+            $("#upload_img_3_tips").removeAttr('hidden');
+        })
+    })
+</script>
+<script>
+    $(function(){
+        $("#upload_img_4").change(function(){
+            $("#upload_img_3_tips").attr('hidden','hidden');
+
+            $("#preview_4").removeAttr('hidden');
+            $("#upload_img_4").removeAttr('hidden');
+            $("#upload_img_4_tips").removeAttr('hidden');
+        })
+    })
+</script>
+
+</body>
+</html>

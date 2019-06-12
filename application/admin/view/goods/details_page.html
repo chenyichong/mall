@@ -1,0 +1,450 @@
+
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+{include file="public/head" /}
+<style>
+	.right{
+		text-align: right;
+	}
+	.form-label{
+		font-size: 15px;
+		font-weight: 600;
+		margin-top: 5px;
+	}
+	.formControls{
+		margin-top: 5px;
+	}
+	.my_span{
+		font-size: 17px;
+	}
+	.maskBar{position:absolute;height:7px;left:0; bottom:-100%; right:0;padding:10px;background-color:rgba(0,0,0,0.6);z-index:2; color:#fff!important}
+	.maskWraper{position:relative; overflow:hidden}
+	.maskWraper.hover .maskBar{bottom:0px;
+		transition: bottom 200ms;
+		-moz-transition: bottom 200ms; /* Firefox 4 */
+		-webkit-transition: bottom 200ms; /* Safari 和 Chrome */
+		-o-transition: bottom 200ms; /* Opera */
+	}
+	.maskBox{position:absolute;width:100%; height:100%;top:0;left:0; bottom:0;right:0;z-index:2;color:#fff!important}
+	.maskWraper.hover .maskBox{background-color:rgba(0,0,0,0.6);
+		transition: all 500ms;
+		-moz-transition: all 500ms; /* Firefox 4 */
+		-webkit-transition: all 500ms; /* Safari 和 Chrome */
+		-o-transition: all 500ms; /* Opera */
+	}
+</style>
+<body>
+<article class="cl pd-20">
+	<div>
+		<!--<div class="row cl">-->
+			<!--<label class="form-label col-xs-3 col-sm-3 right">预览图：</label>-->
+			<!--<div class="formControls col-xs-9 col-sm-9">-->
+
+			<!--</div>-->
+		<!--</div>-->
+		<div class="row cl">
+			<label class="form-label col-xs-3 col-sm-3 right">商品名称：</label>
+			<div class="formControls col-xs-9 col-sm-9" id="name_div_1">
+				<span>{$goods.name}<a href="" id="name_a"> <i class="Hui-iconfont" style="font-size: 15px;color:royalblue">&#xe60c;</i></a></span>
+			</div>
+
+			<div class="formControls col-xs-9 col-sm-9"  id="name_div_2" hidden>
+				<form action="{:url('Goods/modifyName',['id'=>$goods.id])}">
+					<input type="text" class="input-text" placeholder="" id="name" name="name" value="{$goods.name}" style="width: 35%" required >
+					<input type="submit" class="btn btn-link" style="font-size: 13px" value="修改">
+				</form>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-3 col-sm-3 right">价格：</label>
+			<div class="formControls col-xs-9 col-sm-9" id="price_div_1">
+				<span>
+					¥ {$goods.price}
+					{if condition="$goods.original_price neq 0"}
+					(原价: ¥{$goods.original_price})
+					{/if}
+					<a href="" id="price_a"> <i class="Hui-iconfont" style="font-size: 15px;color:royalblue">&#xe60c;</i></a>
+				</span>
+			</div>
+			<div class="formControls col-xs-9 col-sm-9" id="price_div_2" hidden>
+				<form action="{:url('Goods/modifyPrice',['id'=>$goods.id])}">
+					<input type="text" class="input-text" placeholder="" id="price" name="price" style="width: 35%" value="{$goods.price}" required >
+					<input type="submit" class="btn btn-link" style="font-size: 13px" value="修改">
+				</form>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-3 col-sm-3 right">类型：</label>
+			<div class="formControls col-xs-9 col-sm-9" id="sex_div_1">
+				<span>
+					{if condition="$goods.sex eq '男女'"}
+						中性
+					{else /}
+						{$goods.sex}
+					{/if}
+				</span>
+				<span><a href="" id="sex_a" > <i class="Hui-iconfont" style="font-size: 15px;color:royalblue">&#xe60c;</i></a></span>
+			</div>
+			<div class="formControls col-xs-9 col-sm-9" id="sex_div_2" hidden>
+				<form action="{:url('Goods/modifySex',['id'=>$goods.id])}">
+				{if condition="$goods.sex eq '男女'"}
+					<input type="radio"   name="sex" value="男女" checked>中性
+					<input type="radio"   name="sex" value="男装" style="margin-left: 50px">男装
+					<input type="radio"   name="sex" value="女装"  style="margin-left: 50px">女装
+					{elseif condition="$goods.sex eq '男装'" /}
+					<input type="radio"   name="sex" value="男女" >中性
+					<input type="radio"   name="sex" value="男装" style="margin-left: 50px" checked>男装
+					<input type="radio"   name="sex" value="女装"  style="margin-left: 50px">女装
+					{elseif condition="$goods.sex eq '女装'" /}
+					<input type="radio"   name="sex" value="男女" >中性
+					<input type="radio"   name="sex" value="男装" style="margin-left: 50px" >男装
+					<input type="radio"   name="sex" value="女装"  style="margin-left: 50px" checked>女装
+					{/if}
+					<input type="submit" class="btn btn-link" style="font-size: 13px" value="修改">
+				</form>
+			</div>
+		</div>
+
+		<!--商品颜色-->
+		<div class="row cl"  >
+			<label class="form-label col-xs-3 col-sm-3 right">商品颜色：</label>
+			<div class="formControls col-xs-9 col-sm-9" id="color_div_1">
+				<span >{$goods.color}</span>
+				{if condition="$goods.color_2 neq null "}
+				<span style="padding-left: 15px">{$goods.color_2}</span>
+				{/if}
+				{if condition="$goods.color_3 neq null "}
+				<span style="padding-left: 15px">{$goods.color_3}</span>
+				{/if}
+				<a href="" id="color_a"> <i class="Hui-iconfont" style="font-size: 15px;color:royalblue">&#xe60c;</i></a>
+			</div>
+			<div class="formControls col-xs-9 col-sm-9" id="color_div_2" hidden>
+				<form action="{:url('Goods/modifyColor',['id'=>$goods.id])}">
+					<input type="text" style="width: 25%" class="input-text" placeholder="颜色一" id="color" name="color" value="{$goods.color}" required>
+					<input type="text" style="width: 25%" class="input-text" placeholder="颜色二" id="color_2" name="color_2" value="{$goods.color_2}"  >
+					<input type="text" style="width: 25%" class="input-text" placeholder="颜色三" id="color_3" name="color_3" value="{$goods.color_3}"    >
+					<input type="submit" class="btn btn-link" style="font-size: 13px" value="修改">
+				</form>
+			</div>
+		</div>
+
+
+		<!--尺寸-->
+		<div class="row cl" >
+			<label class="form-label col-xs-3 col-sm-3 right" >尺寸：</label>
+			<div class="formControls col-xs-9 col-sm-9" id="size_div_1">
+				{if condition="$goods.size_s eq 1"}<span style="margin-right: 15px">S</span>{/if}
+				{if condition="$goods.size_m eq 1"}<span style="margin-right: 15px">M</span>{/if}
+				{if condition="$goods.size_l eq 1"}<span style="margin-right: 15px">L</span>{/if}
+				{if condition="$goods.size_xl eq 1"}<span style="margin-right: 15px">XL</span>{/if}
+				{if condition="$goods.size_xxl eq 1"}<span style="margin-right: 15px">XXL</span>{/if}
+				<a href="" id="size_a"> <i class="Hui-iconfont" style="font-size: 15px;margin-left:-15px;color:royalblue">&#xe60c;</i></a>
+			</div>
+			<div class="formControls col-xs-9 col-sm-9" id="size_div_2" hidden>
+				<div class="hui-form-radios">
+					<form action="{:url('Goods/modifySize',['id'=>$goods.id])}">
+						{if condition="$goods.size_s eq 0"}
+							<input  style="width:30px;font-size:30px" type="checkbox" value="1" name="size_s" id="c1" /><label for="c1" style="margin-right: 10px;font-size: 17px">S</label>
+						{else/}
+							<input  style="width:30px;font-size:30px" type="checkbox" value="1" name="size_s" id="c1" checked/><label for="c1" style="margin-right: 10px;font-size: 17px">S</label>
+						{/if}
+						{if condition="$goods.size_m eq 0"}
+							<input  style="width:30px;font-size:30px" type="checkbox" value="1" name="size_m" id="c2" /><label for="c2" style="margin-right: 10px;font-size: 17px">M</label>
+						{else/}
+							<input  style="width:30px;font-size:30px" type="checkbox" value="1" name="size_m" id="c2" checked /><label for="c2" style="margin-right: 10px;font-size: 17px" >M</label>
+						{/if}
+						{if condition="$goods.size_l eq 0"}
+							<input  style="width:30px;font-size:30px" type="checkbox" value="1" name="size_l" id="c3" /><label for="c3" style="margin-right: 10px;font-size: 17px">L</label>
+						{else/}
+							<input  style="width:30px;font-size:30px" type="checkbox" value="1" name="size_l" id="c3" checked/><label for="c3" style="margin-right: 10px;font-size: 17px" >L</label>
+						{/if}
+						{if condition="$goods.size_xl eq 0"}
+							<input  style="width:30px;font-size:30px" type="checkbox" value="1" name="size_xl" id="c4" /><label for="c4" style="margin-right: 10px;font-size: 17px">XL</label>
+						{else/}
+							<input  style="width:30px;font-size:30px" type="checkbox" value="1" name="size_xl" id="c4" checked/><label for="c4" style="margin-right: 10px;font-size: 17px" >XL</label>
+						{/if}
+						{if condition="$goods.size_xxl eq 0"}
+						<input  style="width:30px;font-size:30px" type="checkbox" value="1" name="size_xxl" id="c5" /><label for="c5" style="margin-right: 10px;font-size: 17px">XXL</label>
+						{else/}
+						<input  style="width:30px;font-size:30px" type="checkbox" value="1" name="size_xxl" id="c5" checked/><label for="c5" style="margin-right: 10px;font-size: 17px">XXL</label>
+						{/if}
+						<input type="submit" class="btn btn-link" style="font-size: 13px" value="修改">
+					</form>
+				</div>
+			</div>
+		</div>
+		<!--类型-->
+		<div class="row cl">
+			<label class="form-label col-xs-3 col-sm-3 right">商品类型：</label>
+			<div class="formControls col-xs-9 col-sm-2" id="type_div_1">
+				{$goods.type_2|default="其他"}<a href="" id="type_a"> <i class="Hui-iconfont" style="font-size: 15px;color:royalblue">&#xe60c;</i></a>
+			</div>
+			<form action="{:url('Goods/modifyType',['id'=>$goods.id])}">
+				<div class="formControls col-xs-9 col-sm-2" id="type_div_2" style="width: 20%" hidden="hidden">
+
+						<span class="select-box" ><select class="select" name="type_1" id="type_1" >
+							<option >请选择</option>
+							<option value="上衣">上衣</option>
+							<option value="裤子">裤子</option>
+							<option value="裙子">裙子</option>
+							<option value="帽子">帽子</option>
+							<option value="其他">其他</option>
+						</select></span>
+				</div>
+				<div class="formControls col-xs-9 col-sm-2" style="width: 20%" id="type_2"></div>
+				<div id="type_div_3" hidden><input type="submit" class="btn btn-link" style="font-size: 13px" value="修改"></div>
+			</form>
+		</div>
+		<!--关键字-->
+		<div class="row cl">
+			<label class="form-label col-xs-3 col-sm-3 right"  style="margin-top: 0px">关键字：</label>
+			<div class="formControls col-xs-9 col-sm-9" id="keyword_div_1" style="width: 35%;margin-top: 0px">
+				<span style="width: 50px">{$goods.keyword}</span><a href="" id="keyword_a"> <i class="Hui-iconfont" style="font-size: 15px;color:royalblue">&#xe60c;</i></a>
+			</div>
+			<div class="formControls col-xs-9 col-sm-9"  id="keyword_div_2" hidden>
+				<form action="{:url('Goods/modifyKeyword',['id'=>$goods.id])}">
+					<textarea name="keyword" id="keyword" cols="25" rows="3">{$goods.keyword}</textarea>
+					<input type="submit" class="btn btn-link" style="font-size: 13px" value="修改">
+				</form>
+			</div>
+		</div>
+		<!--其他-->
+		<div class="row cl">
+			<label class="form-label col-xs-3 col-sm-3 right">销量：</label>
+			<div class="formControls col-xs-9 col-sm-9">
+				<span>{$goods.sold}</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-3 col-sm-3 right">评价数量：</label>
+			<div class="formControls col-xs-9 col-sm-9">
+				<span>{$comment_num}</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-3 col-sm-3 right">上架时间：</label>
+			<div class="formControls col-xs-9 col-sm-9">
+				<span>{:date("Y-m-d",$goods.sell_time)}</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-3 col-sm-3 right" style="margin-top: 28px">预览图片：</label>
+			<div class="formControls col-xs-9 col-sm-9">
+				<div id="layer-photos-demo" class="layer-photos-demo" >
+					<div class="maskWraper" style="width:85px; height:85px;float: left ">
+						<img src="{$img_1}" layer-src="{$img_1}" width="85px" height="85px" >
+						<div class="maskBar text-c">
+							<form action="{:url('goods/modifyImg_1')}" method="post" id="img_1_form" enctype="multipart/form-data">
+								<input style="position:absolute;opacity:0;" type="file" name="img_1" id="img_1_input" onchange="$('#img_1_form').submit();" accept="image/gif,image/jpeg,image/x-png" hidden/>
+								<input type="text" name="id" value="{$goods.id}" hidden>
+								<a href="#" onclick="$('#img_1_input').trigger('click');" style="color: white;position: relative;bottom: 7px">更换</a>
+							</form>
+						</div>
+					</div>
+					{if condition="$img_2 neq null"}
+					<div class="maskWraper" style="width:85px; height:85px;float: left ">
+						<img src="{$img_2}" layer-src="{$img_2}" width="85px" height="85px" >
+						<div class="maskBar text-c">
+							<form action="{:url('goods/modifyImg_2')}" method="post" id="img_2_form" enctype="multipart/form-data">
+								<input style="position:absolute;opacity:0;" type="file" name="img_2" id="img_2_input" onchange="$('#img_2_form').submit();" accept="image/gif,image/jpeg,image/x-png" hidden/>
+								<input type="text" name="id" value="{$goods.id}" hidden>
+								<a href="#" onclick="$('#img_2_input').trigger('click');" style="color: white;position: relative;bottom: 7px">更换</a>
+							</form>
+						</div>
+					</div>
+					{/if}
+					{if condition="$img_3 neq null"}
+					<div class="maskWraper" style="width:85px; height:85px;float: left ">
+						<img src="{$img_3}" layer-src="{$img_3}" width="85px" height="85px" >
+						<div class="maskBar text-c">
+							<form action="{:url('goods/modifyImg_3')}" method="post" id="img_3_form" enctype="multipart/form-data">
+								<input style="position:absolute;opacity:0;" type="file" name="img_3" id="img_3_input" onchange="$('#img_3_form').submit();" accept="image/gif,image/jpeg,image/x-png" hidden/>
+								<input type="text" name="id" value="{$goods.id}" hidden>
+								<a href="#" onclick="$('#img_3_input').trigger('click');" style="color: white;position: relative;bottom: 7px">更换</a>
+							</form>
+						</div>
+					</div>
+					{/if}
+					{if condition="$img_4 neq null"}
+					<div class="maskWraper" style="width:85px; height:85px;float: left ">
+						<img src="{$img_4}" layer-src="{$img_4}" width="85px" height="85px" >
+						<div class="maskBar text-c">
+							<form action="{:url('goods/modifyImg_4')}" method="post" id="img_4_form" enctype="multipart/form-data">
+								<input style="position:absolute;opacity:0;" type="file" name="img_4" id="img_4_input" onchange="$('#img_4_form').submit();" accept="image/gif,image/jpeg,image/x-png" hidden/>
+								<input type="text" name="id" value="{$goods.id}" hidden>
+								<a href="#" onclick="$('#img_4_input').trigger('click');" style="color: white;position: relative;bottom: 7px">更换</a>
+							</form>
+						</div>
+					</div>
+					{/if}
+				</div>
+			</div>
+		</div>
+
+
+
+	</div>
+</article>
+
+
+{include file="public/footer" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__STATIC__/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="__STATIC__/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="__STATIC__/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="__STATIC__/static/h-ui/js/H-ui.js"></script>
+<script type="text/javascript" src="__STATIC__/static/h-ui/js/H-ui.min.js"></script>
+
+
+<!--修改-->
+<script>
+//	商品名称
+	$(function(){
+    $('#name_a').on('click',function () {
+        $('#name_div_1').hide();
+        $('#name_div_2').show();
+        return false;
+    	})
+	})
+//	商品价格
+	$(function(){
+		$('#price_a').on('click',function () {
+			$('#price_div_1').hide();
+			$('#price_div_2').show();
+			return false;
+		})
+	})
+//	商品性别
+	$(function(){
+		$('#sex_a').on('click',function () {
+			$('#sex_div_1').hide();
+			$('#sex_div_2').show();
+			return false;
+		})
+	})
+//	商品颜色
+	$(function(){
+		$('#color_a').on('click',function () {
+			$('#color_div_1').hide();
+			$('#color_div_2').show();
+			return false;
+		})
+	})
+//	商品颜色
+	$(function(){
+		$('#size_a').on('click',function () {
+			$('#size_div_1').hide();
+			$('#size_div_2').show();
+			return false;
+		})
+	})
+//	商品类型
+    $(function(){
+        $('#type_a').on('click',function () {
+			$('#type_div_1').hide();
+			$('#type_div_2').show();
+			$('#type_div_3').show();
+            return false;
+        })
+    })
+//	关键字
+$(function(){
+    $('#keyword_a').on('click',function () {
+        $('#keyword_div_1').hide();
+        $('#keyword_div_2').show();
+        $('#keyword_div_3').show();
+        return false;
+    })
+})
+</script>
+<!--商品类型-->
+<script>
+	$(function(){
+	    $('#type_1').change(function(){
+			if($('#type_1').val() == '上衣'){
+			    $('#type_2').empty();
+			    $('#type_2').append('<span class="select-box" ><select class="select" name="type_2" >'+
+					'<option value="衬衫">衬衫</option>' +
+					'<option value="T恤">T恤</option>' +
+					'<option value="卫衣">卫衣</option>' +
+					'<option value="针织衫">针织衫</option>' +
+					'<option value="外套">外套</option>' +
+                    '<option value="POLO衫">POLO衫</option>' +
+                    '</span></select>');
+			}
+			else if($('#type_1').val() == '裤子') {
+                $('#type_2').empty();
+                $('#type_2').append('<span class="select-box" ><select class="select" name="type_2" >' +
+                    '<option value="休闲裤">休闲裤</option>' +
+                    '<option value="牛仔裤">牛仔裤</option>' +
+                    '<option value="运动裤">运动裤</option>' +
+                    '<option value="针织裤">针织裤</option>' +
+                    '</span></select>');
+            }else if($('#type_1').val() == '帽子'){
+                $('#type_2').empty();
+                $('#type_2').append('<span class="select-box" ><select class="select" name="type_2" >'+
+                    '<option value="鸭舌帽">鸭舌帽</option>' +
+                    '<option value="礼帽">礼帽</option>' +
+                    '<option value="贝雷帽">贝雷帽</option>' +
+                    '</span></select>');
+			}else if($('#type_1').val() == '其他') {
+                $('#type_2').empty();
+                $('#type_2').append('<span class="select-box" ><select class="select" name="type_2" >' +
+                    '<option value="围巾">围巾</option>' +
+                    '<option value="手套">手套</option>' +
+                    '<option value="袜子">袜子</option>' +
+                    '<option value="其他">其他</option>' +
+                    '</span></select>');
+            }else if($('#type_1').val() == '裙子') {
+                $('#type_2').empty();
+                $('#type_2').append('<span class="select-box" ><select class="select" name="type_2" >' +
+                    '<option value="长裙">长裙</option>' +
+                    '<option value="短裙">短裙</option>' +
+
+                    '</span></select>');
+            }
+		})
+	})
+</script>
+<!--商品图片-->
+<script>
+    $('#img_1_a').on('click', function(e) {
+//        e.preventDefault();
+        $(this).closest('input[type=file]').trigger('click');
+        return false;
+    })
+</script>
+<!--验证商品名称-->
+<script>
+    $(function(){
+        $('#name').change(function(){
+            $.post("{:url('Goods/checkName')}",{"name":$(this).val()},function(data){
+                if(data.status==0){
+                    $("#name_span").empty();
+                    $("#name_span").html(data.message);
+				}else{
+                    $("#name_span").empty();
+				}
+            });
+        });
+    });
+</script>
+<!--图片遮罩层-->
+<script>
+    $(function () {
+        $('.maskWraper').Huihover(function () {
+			$('#change').removeAttr('hidden');
+        });
+    });
+</script>
+<!--layer图片层-->
+<script>
+    layer.photos({
+        photos: '#layer-photos-demo'
+        ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机）
+    });
+</script>
+</body>
+</html>

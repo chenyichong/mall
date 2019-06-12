@@ -1,0 +1,196 @@
+
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+{include file="public/head" /}
+<style>
+    .discount_div{
+        background-color:#e0f0e9;
+        width: 475px;
+        height:100px;
+        text-align: center;
+        border: solid 4px #88ada6;
+        border-top: none;
+        z-index: 0;
+        color: #177cb0;
+
+    }
+    .discount_span{
+        font-size: 40px;
+        position: relative;
+        top:15px;
+    }
+	.hover{
+        background-color: #44cef6;
+        color: #003371;
+        z-index: 100;
+    }
+
+
+</style>
+
+
+
+
+<body>
+    <div class="discount_div" style=" border-top: solid 3px #88ada6;">
+        <form action="{:url('goods/discount')}">
+            <span class="discount_span" >9.5 折</span>
+            <input type="text" name="id" value="{$id}" hidden>
+            <input type="text" name="discount" value="0.95" hidden>
+        </form>
+    </div>
+    <div class="discount_div">
+        <form action="{:url('goods/discount')}">
+            <span class="discount_span" >9 折</span>
+            <input type="text" name="id" value="{$id}" hidden>
+            <input type="text" name="discount" value="0.9" hidden>
+        </form>
+    </div>
+    <div class="discount_div">
+        <form action="{:url('goods/discount')}">
+            <span class="discount_span" >8.5 折</span>
+            <input type="text" name="id" value="{$id}" hidden>
+            <input type="text" name="discount" value="0.85" hidden>
+        </form>
+    </div>
+    <div class="discount_div">
+        <form action="{:url('goods/discount')}">
+            <span class="discount_span" >8 折</span>
+            <input type="text" name="id" value="{$id}" hidden>
+            <input type="text" name="discount" value="0.8" hidden>
+        </form>
+    </div>
+    <div class="discount_div">
+        <form action="{:url('goods/discount')}">
+            <span class="discount_span" >7.5 折</span>
+            <input type="text" name="id" value="{$id}" hidden>
+            <input type="text" name="discount" value="0.75" hidden>
+        </form>
+    </div>
+    <div class="discount_div">
+        <form action="{:url('goods/discount')}">
+            <span class="discount_span" >7 折</span>
+            <input type="text" name="id" value="{$id}" hidden>
+            <input type="text" name="discount" value="0.7" hidden>
+        </form>
+    </div>
+    <div class="discount_div">
+        <form action="{:url('goods/discount')}">
+            <span class="discount_span" >6.5 折</span>
+            <input type="text" name="id" value="{$id}" hidden>
+            <input type="text" name="discount" value="0.65" hidden>
+        </form>
+    </div>
+    <div class="discount_div">
+        <form action="{:url('goods/discount')}">
+            <span class="discount_span" >6 折</span>
+            <input type="text" name="id" value="{$id}" hidden>
+            <input type="text" name="discount" value="0.6" hidden>
+        </form>
+    </div>
+    <div class="discount_div">
+        <form action="{:url('goods/discount')}">
+            <span class="discount_span" >5.5 折</span>
+            <input type="text" name="id" value="{$id}" hidden>
+            <input type="text" name="discount" value="0.55" hidden>
+        </form>
+    </div>
+    <div class="discount_div">
+        <form action="{:url('goods/discount')}">
+            <span class="discount_span" >5 折</span>
+            <input type="text" name="id" value="{$id}" hidden>
+            <input type="text" name="discount" value="0.5" hidden>
+        </form>
+    </div>
+    <div class="discount_div">
+        <form action="{:url('goods/discount')}">
+            <span class="discount_span" >4.5 折</span>
+            <input type="text" name="id" value="{$id}" hidden>
+            <input type="text" name="discount" value="0.45" hidden>
+        </form>
+    </div>
+    <div class="discount_div">
+        <form action="{:url('goods/discount')}">
+            <span class="discount_span" >4 折</span>
+            <input type="text" name="id" value="{$id}" hidden>
+            <input type="text" name="discount" value="0.4" hidden>
+        </form>
+    </div>
+    <div class="discount_div">
+        <form action="{:url('goods/discount')}">
+            <span class="discount_span" >3.5 折</span>
+            <input type="text" name="id" value="{$id}" hidden>
+            <input type="text" name="discount" value="0.35" hidden>
+        </form>
+    </div>
+    <div class="discount_div">
+        <form action="{:url('goods/discount')}">
+            <span class="discount_span" >3 折</span>
+            <input type="text" name="id" value="{$id}" hidden>
+            <input type="text" name="discount" value="0.3" hidden>
+        </form>
+    </div>
+    <div class="discount_div">
+        <form action="{:url('goods/discount')}">
+            <span class="discount_span" >2.5 折</span>
+            <input type="text" name="id" value="{$id}" hidden>
+            <input type="text" name="discount" value="0.25" hidden>
+        </form>
+    </div>
+    <div class="discount_div">
+        <form action="{:url('goods/discount')}">
+            <span class="discount_span" >2 折</span>
+            <input type="text" name="id" value="{$id}" hidden>
+            <input type="text" name="discount" value="0.2" hidden>
+        </form>
+    </div>
+    <div class="discount_div">
+        <form action="{:url('goods/discount')}">
+            <span class="discount_span" >1.5 折</span>
+            <input type="text" name="id" value="{$id}" hidden>
+            <input type="text" name="discount" value="0.15" hidden>
+        </form>
+    </div>
+    <div class="discount_div">
+        <form action="{:url('goods/discount')}">
+            <span class="discount_span" >1 折</span>
+            <input type="text" name="id" value="{$id}" hidden>
+            <input type="text" name="discount" value="0.1" hidden>
+        </form>
+    </div>
+
+    </div>  
+
+
+
+
+
+{include file="public/footer" /}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__STATIC__/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="__STATIC__/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="__STATIC__/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<!--hover-->
+<script>
+       $('.discount_div').hover(
+           function(){
+               $(this).addClass('hover');
+               $(this).attr('background-color','#000000')
+           },function(){
+               $(this).removeClass('hover');
+           }
+       )
+       $('.discount_div').on('click',function () {
+           $(this).children('form').submit();
+           parent.location.reload();
+       })
+</script>
+
+
+
+
+
+
+</body>
+</html>

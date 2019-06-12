@@ -1,0 +1,81 @@
+﻿<!DOCTYPE HTML>
+<html>
+{include file="public/head" /}
+<body>
+{include file="public/header" /}
+{include file="public/menu" /}
+<section class="Hui-article-box">
+	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+		<span class="c-gray en">&gt;</span>
+		用户管理
+		<span class="c-gray en">&gt;</span>
+		用户恢复<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a> </nav>
+	<div class="Hui-article">
+		<article class="cl pd-20">
+
+			<div class="cl pd-5 bg-1 bk-gray mt-20">
+				<span class="l"></span>
+				<span class="r">共有数据：<strong>{$count}</strong> 条</span>
+			</div>
+			<table class="table table-border table-bordered table-bg">
+				<thead>
+					<tr>
+						<th scope="col" colspan="9">废弃用户</th>
+					</tr>
+					<tr class="text-c">
+						<th width="40">ID</th>
+						<th width="90">昵称</th>
+						<th width="90">手机</th>
+						<th width="120">邮箱</th>
+						<th width="50">等级</th>
+						<th width="90">上次登录</th>
+						<th width="90">删除时间</th>
+						<th width="170">恢复</th>
+					</tr>
+				</thead>
+				<tbody>
+					{volist name="member" id="member"}
+					<tr class="text-c">
+						<td>{$member.id}</td>
+						<td>{$member.name}</td>
+						<td>{$member.phone}</td>
+						<td>{$member.email}</td>
+						<td>普通用户</td>
+						<td>{$member.login_time|date="m-d H:i",###}</td>
+						{//账号状态}
+						<td>{$member.delete_time|date="m-d H:i",###}</td>
+
+						<td class="td-manage">
+							<a href="{:url('member/restore',['id'=>$member.id])}" onclick="restore()" class="btn btn-success radius"><i class="Hui-iconfont">&#xe66c;</i> 恢复</a>
+							&nbsp
+							<a title="删除" href="javascript:;" onclick="member_del(this,{$member.id})" class="btn btn-danger radius" style="text-decoration:none"><i class="Hui-iconfont">&#xe66c;</i>删除</a>
+
+						</td>
+					</tr>
+					{/volist}
+				</tbody>
+			</table>
+		</article>
+	</div>
+
+
+</section>
+{include file="public/footer" /}
+
+<!--请在下方写此页面业务相关的脚本--> 
+<script type="text/javascript" src="__STATIC__/lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+<script type="text/javascript" src="__STATIC__/lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" src="__STATIC__/lib/laypage/1.2/laypage.js"></script>
+<script>
+    function member_del(obj,id){
+        layer.confirm('确认要删除吗？',function(index){
+      		$.get('{:url("member/delete_true")}',{id:id});
+
+            $(obj).parents("tr").remove();
+            layer.msg('已删除!',{icon:1,time:1000});
+        });
+    }
+</script>
+
+</body>
+</html>

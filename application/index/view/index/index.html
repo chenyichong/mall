@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{include file="public/head" /}
+	<link rel="stylesheet" type="text/css" href="__STATIC__/index/styles/main_styles.css">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/index/styles/responsive.css">
+
+
+</head>
+<body>
+
+{include file="public/menu" /}
+
+<div class="super_container">
+
+	<!-- Header -->
+
+	<!-- Home -->
+
+	<div class="home" style="margin-bottom: -200px">
+		
+		<!-- Home Slider -->
+		<div class="home_slider_container">
+			<div class="owl-carousel owl-theme home_slider">
+				
+				<!-- Slide -->
+				<div class="owl-item">
+					<div class="background_image" style="max-height:500px;background-image:url(__STATIC__/index/images/home_slider_5.jpg)"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Boxes -->
+	<div class="boxes">
+		<div class="section_container">
+			<div class="container">
+				<div class="row">
+					
+					<!-- Box -->
+					<div class="col-lg-4 box_col">
+						<div class="box">
+							<div class="box_image"><img src="__STATIC__/index/images/box_1.jpg" alt=""></div>
+							<div class="box_title trans_200" ><a href="{:url('goods/search',['search'=>'短袖'])}" style="padding: 0;margin: 0">炎热夏季最佳搭配</a></div>
+						</div>
+					</div>
+
+					<!-- Box -->
+					<div class="col-lg-4 box_col">
+						<div class="box">
+							<div class="box_image"><img src="__STATIC__/index/images/box_2.jpg" alt=""></div>
+							<div class="box_title trans_200"><a href="{:url('goods/search',['search'=>'棉'])}">舒适才是正义?</a></div>
+						</div>
+					</div>
+
+					<!-- Box -->
+					<div class="col-lg-4 box_col">
+						<div class="box">
+							<div class="box_image"><img src="__STATIC__/index/images/box_3.jpg" alt=""></div>
+							<div class="box_title trans_200"><a href="{:url('goods/search',['search'=>'牛仔'])}">百搭牛仔系列</a></div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Categories -->
+
+	<div class="categories">
+		<div class="section_container">
+			<div class="container">
+				<div class="row">
+					<div class="col text-center">
+						<div class="categories_list_container">
+							<ul class="categories_list d-flex flex-row align-items-center justify-content-start">
+								<li><a href="{:url('goods/index',['order'=>'最新'])}">最新商品</a></li>
+								<li><a href="{:url('goods/index',['order'=>'人气'])}">畅销商品</a></li>
+								<li><a href="{:url('goods/index',['order'=>'价格'])}">实惠顾家</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Products -->
+
+	<div class="products">
+		<div class="section_container">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="products_container grid">
+
+							<!-- Product -->
+							{volist name="goods" id="goods"}
+							{if condition="$goods.original_price neq null"}
+							<div class="product grid-item sale" style="margin-bottom: 90px">
+								<div class="product_inner">
+									<div class="product_image">
+										<a href="{:url('goods/single',['id'=>$goods['id']])}">
+											<img src="{$goods.preview_1}" alt="">
+										</a>
+										<div class="product_tag">sale</div>
+									</div>
+									<div class="product_content text-center" style="padding: 0">
+										<div class="product_title" style="position: relative;top:30px;"><a href="{:url('goods/single',['id'=>$goods['id']])}" style="font-size: 15px">{$goods.name}</a></div>
+										<div class="product_price" style="position: relative;top:35px;font-size: 15px"><span style="color: black">售价:</span> ¥ {:number_format($goods.price, 2)}<span><del>RMB {$goods.original_price}</del></span></div>
+									</div>
+								</div>
+							</div>
+							{elseif condition="$goods.sold gt 100" /}
+							<div class="product grid-item hot" style="margin-bottom: 90px">
+								<div class="product_inner">
+									<div class="product_image">
+										<a href="{:url('goods/single',['id'=>$goods['id']])}">
+											<img src="{$goods.preview_1}" alt="">
+										</a>
+										<div class="product_tag">hot</div>
+									</div>
+									<div class="product_content text-center" style="padding: 0">
+										<div class="product_title" style="position: relative;top:30px;"><a href="{:url('goods/single',['id'=>$goods['id']])}" style="font-size: 15px">{$goods.name}</a></div>
+										<div class="product_price" style="position: relative;top:35px;font-size: 15px">售价: ¥ {:number_format($goods.price, 2)}</div>
+									</div>
+								</div>
+							</div>
+							{elseif condition="time()-$goods.sell_time lt 60*60*24*3" /}
+							<div class="product grid-item new" style="margin-bottom: 90px">
+								<div class="product_inner">
+									<div class="product_image">
+										<a href="{:url('goods/single',['id'=>$goods['id']])}">
+											<img src="{$goods.preview_1}" alt="">
+										</a>
+										<div class="product_tag">new</div>
+									</div>
+									<div class="product_content text-center" style="padding: 0">
+										<div class="product_title" style="position: relative;top:30px;"><a href="{:url('goods/single',['id'=>$goods['id']])}" style="font-size: 15px">{$goods.name}</a></div>
+										<div class="product_price" style="position: relative;top:35px;font-size: 15px">售价: ¥ {:number_format($goods.price, 2)}</div>
+									</div>
+								</div>
+							</div>
+							{else/}
+							<div class="product grid-item" style="margin-bottom: 90px">
+								<div class="product_inner">
+									<div class="product_image">
+										<a href="{:url('goods/single',['id'=>$goods['id']])}">
+											<img src="{$goods.preview_1}" alt="">
+										</a>
+									</div>
+									<div class="product_content text-center" style="padding: 0">
+										<div class="product_title" style="position: relative;top:30px;"><a href="{:url('goods/single',['id'=>$goods['id']])}" style="font-size: 15px">{$goods.name}</a></div>
+										<div class="product_price" style="position: relative;top:35px;font-size: 15px">售价: ¥ {:number_format($goods.price, 2)}</div>
+									</div>
+								</div>
+							</div>
+							{/if}
+							{/volist}
+							<!--&lt;!&ndash; Product &ndash;&gt;-->
+							<!--<div class="product grid-item">-->
+								<!--<div class="product_inner">-->
+									<!--<div class="product_image"><img src="__STATIC__/index/images/product_2.jpg" alt=""></div>-->
+									<!--<div class="product_content text-center">-->
+										<!--<div class="product_title"><a href="product.html">hype grey shirt</a></div>-->
+										<!--<div class="product_price">¥ 19.50</div>-->
+										<!--<div class="product_button ml-auto mr-auto trans_200"><a href="#">加入购物车</a></div>-->
+									<!--</div>-->
+								<!--</div>	-->
+							<!--</div>-->
+
+							<!--&lt;!&ndash; Product &ndash;&gt;-->
+							<!--<div class="product grid-item sale">-->
+								<!--<div class="product_inner">-->
+									<!--<div class="product_image">-->
+										<!--<img src="__STATIC__/index/images/product_3.jpg" alt="">-->
+										<!--<div class="product_tag">sale</div>-->
+									<!--</div>-->
+									<!--<div class="product_content text-center">-->
+										<!--<div class="product_title"><a href="product.html">long sleeve jacket</a></div>-->
+										<!--<div class="product_price">¥ 32.20<span>RMB 64.40</span></div>-->
+										<!--<div class="product_button ml-auto mr-auto trans_200"><a href="#">加入购物车</a></div>-->
+									<!--</div>-->
+								<!--</div>	-->
+							<!--</div>-->
+
+							<!--&lt;!&ndash; Product &ndash;&gt;-->
+							<!--<div class="product grid-item">-->
+								<!--<div class="product_inner">-->
+									<!--<div class="product_image">-->
+										<!--<img src="__STATIC__/index/images/product_4.jpg" alt="">-->
+									<!--</div>-->
+									<!--<div class="product_content text-center">-->
+										<!--<div class="product_title"><a href="product.html">denim men shirt</a></div>-->
+										<!--<div class="product_price">¥ 59.90</div>-->
+										<!--<div class="product_button ml-auto mr-auto trans_200"><a href="#">加入购物车</a></div>-->
+									<!--</div>-->
+								<!--</div>	-->
+							<!--</div>-->
+
+							<!--&lt;!&ndash; Product &ndash;&gt;-->
+							<!--<div class="product grid-item">-->
+								<!--<div class="product_inner">-->
+									<!--<div class="product_image">-->
+										<!--<img src="__STATIC__/index/images/product_5.jpg" alt="">-->
+									<!--</div>-->
+									<!--<div class="product_content text-center">-->
+										<!--<div class="product_title"><a href="product.html">long red shirt</a></div>-->
+										<!--<div class="product_price">¥ 79.90</div>-->
+										<!--<div class="product_button ml-auto mr-auto trans_200"><a href="#">加入购物车</a></div>-->
+									<!--</div>-->
+								<!--</div>	-->
+							<!--</div>-->
+
+							<!--&lt;!&ndash; Product &ndash;&gt;-->
+							<!--<div class="product grid-item new">-->
+								<!--<div class="product_inner">-->
+									<!--<div class="product_image">-->
+										<!--<img src="__STATIC__/index/images/product_6.jpg" alt="">-->
+										<!--<div class="product_tag">new</div>-->
+									<!--</div>-->
+									<!--<div class="product_content text-center">-->
+										<!--<div class="product_title"><a href="product.html">hype grey shirt</a></div>-->
+										<!--<div class="product_price">¥ 59.90</div>-->
+										<!--<div class="product_button ml-auto mr-auto trans_200"><a href="#">加入购物车</a></div>-->
+									<!--</div>-->
+								<!--</div>	-->
+							<!--</div>-->
+
+							<!--&lt;!&ndash; Product &ndash;&gt;-->
+							<!--<div class="product grid-item">-->
+								<!--<div class="product_inner">-->
+									<!--<div class="product_image">-->
+										<!--<img src="__STATIC__/index/images/product_7.jpg" alt="">-->
+									<!--</div>-->
+									<!--<div class="product_content text-center">-->
+										<!--<div class="product_title"><a href="product.html">long sleeve jacket</a></div>-->
+										<!--<div class="product_price">¥ 15.90</div>-->
+										<!--<div class="product_button ml-auto mr-auto trans_200"><a href="#">加入购物车</a></div>-->
+									<!--</div>-->
+								<!--</div>	-->
+							<!--</div>-->
+
+							<!--&lt;!&ndash; Product &ndash;&gt;-->
+							<!--<div class="product grid-item sale">-->
+								<!--<div class="product_inner">-->
+									<!--<div class="product_image">-->
+										<!--<img src="__STATIC__/index/images/product_8.jpg" alt="">-->
+										<!--<div class="product_tag">sale</div>-->
+									<!--</div>-->
+									<!--<div class="product_content text-center">-->
+										<!--<div class="product_title"><a href="product.html">denim men shirt</a></div>-->
+										<!--<div class="product_price">¥ 43.99<span>RMB 64.40</span></div>-->
+										<!--<div class="product_button ml-auto mr-auto trans_200"><a href="#">加入购物车</a></div>-->
+									<!--</div>-->
+								<!--</div>	-->
+							<!--</div>-->
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{include file="public/bottom" /}
+
+</div>
+
+{include file="public/last" /}
+</body>
+</html>

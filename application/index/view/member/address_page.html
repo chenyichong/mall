@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>个人信息</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="aStar Fashion Template Project">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="__STATIC__/index/styles/bootstrap-4.1.3/bootstrap.css">
+<link href="__STATIC__/index/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/index/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/index/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/index/plugins/OwlCarousel2-2.2.1/animate.css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/index/styles/product.css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/index/styles/product_responsive.css">
+
+<link href="__STATIC__/index/styles/bootstrap.css" rel='stylesheet' type='text/css' />
+<script src="__STATIC__/index/js/bootstrap.js"> </script>
+
+</head>
+<style>
+	.my_div_add td:nth-child(1){width: 120px;text-align: right;padding-right: 20px;}
+	.my_div_add td:nth-child(2){width: 250px;text-align: left;font-size: 15px}
+	.my_div_add td{
+		padding: 15px 15px;
+		font-family: normal;
+	}
+	.my_div_revise td:nth-child(1){width: 120px;text-align: right;padding-right: 20px;}
+	.my_div_revise td:nth-child(2){width: 250px;text-align: left;font-size: 15px}
+	.my_div_revise td{
+		padding: 15px 15px;
+		font-family: normal;
+	}
+	a{
+		font-size: 15px;
+	}
+	.my_table a{
+		color:darkseagreen;
+	}
+	.my_table a:hover{
+		color:orange;
+	}
+	/*.my_div:first-of-type { opacity: 0.5 };*/
+</style>
+<body>
+
+
+<div class="super_container">
+
+	<!-- Header -->
+{include file="public/menu" /}
+	<!-- Home -->
+
+	<!-- Products -->
+
+	<div class="product">
+
+		<!-- Sorting & Filtering -->
+	{include file="public/grxx_top" /}
+		<!-- Product Content -->
+		<div class="section_container">
+			<div class="container">
+
+
+					{if condition="$member.address_id eq null"}
+
+				<div style="margin-top: 70px;margin-left: 50px">
+					<span  style="font-size: 17px">请添加地址</span>
+					<button class="btn btn-info" id="add" style="margin-left: 50px">添加地址</button>
+				</div>
+
+
+				{else /}
+				<div class="row" style="margin-top: 40px"></div>
+				<div class="row">
+				</div>
+				<form action="">
+					<div class="row">
+						<table class="my_table" style="width:570px;border: solid 1px forestgreen;font-size: 17px;font-weight: lighter;color: black">
+							<tr>
+								<td style="padding: 30px;width: 80px"  >
+									<input type="radio" name="address_id" value="{$checked.id}" checked>
+								</td>
+								<td style="width: 380px">
+									<table>
+										<tr>
+											<td style="padding: 10px;width: 180px">收件人:{$checked.name}</td>
+											<td style="padding: 10px">手机:{$checked.phone}</td>
+										</tr>
+										<tr >
+											<td colspan="2" style="padding: 10px;padding-top: 0px">
+												地址:{$checked.address}
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td>
+									<input type="text" name="id" id="id" value="{$checked.id}" hidden>
+									<a href="#" class="address_revise" onclick="address_revise({$checked.id})" >修改</a>
+									<a href="#" class="address_delete" onclick="address_delete({$checked.id})"  style="padding-left: 20px;">删除</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+
+				{volist name='address' id='address'}
+					{if condition="$address.id neq $checked.id"}
+						<div class="row">
+							<table class="my_table" style="width:570px;border: solid 1px gainsboro;font-size: 17px;font-weight: lighter;color: black">
+								<tr>
+									<td style="padding: 30px;width: 80px"  >
+										<input type="radio" name="address_id" value="{$address.id}">
+									</td>
+									<td style="width: 380px">
+										<table>
+											<tr>
+												<td style="padding: 10px;width: 180px">收件人:{$address.name}</td>
+												<td style="padding: 10px">手机:{$address.phone}</td>
+											</tr>
+											<tr >
+												<td colspan="2" style="padding: 10px;padding-top: 0px">
+													地址:{$address.address}
+												</td>
+											</tr>
+										</table>
+									</td>
+									<td>
+										<input type="text" name="id" id="id" value="{$address.id}" hidden>
+										<a href="#" class="address_revise" onclick="address_revise({$address.id})">修改</a>
+										<a href="#" class="address_delete" onclick="address_delete({$address.id})" style="padding-left: 20px;">删除</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+					{/if}
+				{/volist}
+				</form>
+				<div class="row">
+					<button class="btn btn-info" id="add" style="margin-top:20px;margin-left: 386px ">添加地址</button>
+					<button class="btn btn-info" id="submit_choose" style="margin-top:20px;margin-left: 20px">选择地址</button>
+				</div>
+				{/if}
+
+
+				<!--添加新地址-->
+				<div class="my_div_add" style="display: none">
+					<form id="form_add">
+						<table >
+							<tr>
+								<td>收件人:</td>
+								<td>
+									<input type="text" id="name" name="name" >
+									<!--<span id="name_span" style="color:red">收件人不能为空</span>-->
+								</td>
+							</tr>
+							<tr>
+								<td>手机:</td>
+								<td>
+									<input type="text" id="phone" name="phone">
+								</td>
+							</tr>
+							<tr>
+								<td style="padding-bottom: 60px">地址:</td>
+								<td>
+									<textarea name="address" id="address"  rows="3" style="width: 177px"  placeholder="xx省 xx市 xx街道"></textarea>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<button class="btn btn-info" id="submit" style="margin-left: 120px">提交</button>
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+
+				<!--修改地址-->
+				<div class="my_div_revise" style="display: none">
+					<form id="form_revise">
+						<table >
+							<tr>
+								<td>收件人:</td>
+								<td>
+									<input type="text" id="name_revise" name="name" value="{$name|default=''}">
+									<input type="text" id="id_revise" name="id" value="" hidden>
+								</td>
+							</tr>
+							<tr>
+								<td>手机:</td>
+								<td>
+									<input type="text" id="phone_revise" name="phone" value="{$data.phone|default=''}">
+								</td>
+							</tr>
+							<tr>
+								<td style="padding-bottom: 60px">地址:</td>
+								<td>
+									<textarea name="address" id="address_revise"  rows="3" style="width: 177px"  placeholder="xx省 xx市 xx街道">{$data.address|default=''}</textarea>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<button class="btn btn-info" id="submit_revise" style="margin-left: 120px">提交</button>
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+	
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="__STATIC__/index/js/jquery-3.2.1.min.js"></script>
+<script src="__STATIC__/layer/layer.js"></script>
+
+<!--添加地址小窗口-->
+<script>
+	$(function(){
+	    $('#add').on('click',function(){
+            layer.open({
+				title:"添加地址",
+                type: 1,
+//                skin: 'layui-layer-rim', //加上边框
+                area: ['350px', '340px'], //宽高
+//                content: '<form method="post" action="{:url('member/addressAdd')}"><table > <tr><td>收件人:</td> <td> <input type="text" id="name" name="name"> </td> </tr> <tr> <td>电话:</td> <td> <input type="text" id="phone" name="phone"> </td> </tr> <tr> <td style="padding-bottom: 60px">地址:</td> <td> <textarea name="address" id="address" rows="3" style="width: 171px"></textarea> </td> </tr> <tr> <td></td> <td style="padding-left: 150px"> <input type="submit" value="提交"> </td> </tr> </table> </form> '
+           		content:$(".my_div_add"),
+            });
+		})
+	})
+</script>
+
+<!--添加地址-->
+<script>
+	$(function () {
+		$("#submit").on('click',function () {
+			$.ajax({
+				type:'post',
+				url:'{:url("member/addressAdd")}',
+				data:$("#form_add").serialize(),
+				dataType:'json',
+				success:function(data){
+				    if(data.status == 1){
+						layer.msg(data.message,{icon:6,time:1000,offset: '200px'},function(){
+                            window.location.href="{:url('member/addressPage')}";
+						});
+                    }else{
+                        layer.msg(data.message,{icon:5,time:1000,offset: '200px'});
+
+					}
+				}
+        })
+            return false;
+        })
+    })
+</script>
+
+<!--选择地址-->
+<script>
+	$(function () {
+		$("#submit_choose").on('click',function () {
+			$.post('{:url("member/addressChoose")}',$("form").serialize(),function (data) {
+                layer.msg('更换成功!~',{icon:6,time:900,offset: '200px'},function () {
+                    window.location.href="{:url('member/addressPage')}";
+                })
+            })
+        })
+    })
+</script>
+
+<!--删除地址-->
+<script>
+	function address_delete(id){
+        layer.confirm('确定删除吗?', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+			$.post('{:url("member/addressDelete")}',{id:id},function () {
+				layer.msg("删除成功",{icon:1,time:1200,offset: '200px'},function(){
+                    window.location.href="{:url('member/addressPage')}";
+				});
+			})
+			return false;
+        }, function(){
+
+        });
+	}
+</script>
+
+<!--修改地址-->
+<script>
+    function address_revise(id){
+		$.post('{:url("member/addressRevisePage")}',{id:id},function (data) {
+            layer.open({
+                title:"添加地址",
+                type: 1,
+                skin: 'layui-layer-rim', //加上边框
+                area: ['350px', '340px'], //宽高
+                content:$(".my_div_revise"),
+				success:function () {
+					$('#name_revise').val(data.name);
+					$('#phone_revise').val(data.phone);
+					$('#address_revise').val(data.address);
+					$('#id_revise').val(data.id);
+					$("#submit_revise").on('click',function () {
+						$.ajax({
+							type:'post',
+							url:'{:url("member/addressRevise")}',
+							data:$('#form_revise').serialize(),
+							dataType:'json',
+							success:function (data) {
+								if(data.status == 0){
+								    layer.msg(data.message,{icon:5,time:900,offset: '200px'});
+								}else{
+                                    layer.msg(data.message,{icon:6,time:900,offset: '200px'},function () {
+                                        window.location.href="{:url('member/addressPage')}";
+                                    });
+                                }
+                            }
+						})
+						return false;
+                    })
+                }
+            });
+//			alert(data.id);
+		})
+		return false;
+    }
+</script>
+
+</body>
+</html>

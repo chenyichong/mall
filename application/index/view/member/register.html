@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html>
+{include file="public/head" /}
+
+<link rel="stylesheet" type="text/css" href="__STATIC__/index/styles/cart.css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/index/styles/main_styles.css">
+<link href="__STATIC__/index/styles/style.css" rel='stylesheet' type='text/css' />
+
+<style>
+	.my_span{
+		height:15px;
+	}
+	/*body {*/
+		/*background-image: url(__STATIC__/index/my_images/bg.jpg);*/
+		/*height: 1000px;*/
+	/*}*/
+	/*.address span {*/
+		/*color:#ffffff;*/
+	/*}*/
+
+</style>
+<body>
+ <!--start-content-->
+<!--account-->
+ {include file="public/menu" /}
+   <div class="account" style="height:600px;width: 1000px;margin-left: 350px;">
+	  <div class="container">
+	       <div class="account-bottom">
+				<div class="col-md-5 account-left">
+					<form>
+						<div class="account-top heading">
+							<h3>用户注册</h3>
+						</div>
+						<div class="address">
+							<span>昵称</span>
+							<input type="text" id="name" name="name" placeholder="4-16个字符">
+							<span  class ="my_span" id="name_span" ></span>
+						</div>
+						<div class="address">
+							<span>手机</span>
+							<input type="text" id="phone" name="phone" placeholder="请输入手机">
+							<span  class ="my_span" id="phone_span"></span>
+						</div>
+						<div class="address">
+							<span>邮箱</span>
+							<input type="text" id="email" name="email" placeholder="请输入邮箱">
+							<span  class ="my_span" id="email_span"></span>
+						</div>
+						<div class="address">
+							<span>用户密码</span>
+							<input type="password" id="password" name="password" placeholder="6-12位数字或字母">
+							<span  class ="my_span" id="password_span"></span>
+						</div>
+						<div class="address">
+							<span>确认密码</span>
+							<input type="password" id="repassword" name="repassword" placeholder="6-12位数字或字母">
+							<span  class ="my_span" id="repassword_span"></span>
+						</div>
+						<!--<div class="address new" >-->
+							<!--<input type="submit" value="注册" id="submit" >-->
+						<!--</div>-->
+						<div class="button button_update trans_200"><a href="" id="submit" style="font-size: 19px">注册</a></div>
+					</form>
+				</div>
+				 </div>
+			</div>
+	  </div>
+<!-- checkout -->
+
+ <!--//end-content-->
+
+<!--验证信息 昵称-->
+<script>
+    $(function(){
+        $('#name').change(function(){
+            $.post("{:url('member/registerCheckName')}",{"name":$(this).val()},function(data){
+                $("#name_span").empty();
+                $("#name_span").html(data.message);
+            });
+        });
+    });
+</script>
+
+<!--验证信息 手机-->
+<script>
+	$(function(){
+		$('#phone').change(function(){
+			$.post("{:url('member/registerCheckPhone')}",{"phone":$(this).val()},function(data){
+                $("#phone_span").empty();
+                $("#phone_span").html(data.message);
+			});
+		});
+	});
+</script>
+
+<!--验证信息 邮箱-->
+<script>
+    $(function(){
+        $('#email').change(function(){
+            $.post("{:url('member/registerCheckEmail')}",{"email":$(this).val()},function(data){
+                $("#email_span").empty();
+                $("#email_span").html(data.message);
+            });
+        });
+    });
+</script>
+
+<!--验证信息 用户密码-->
+<script>
+    $(function(){
+        $('#password').change(function(){
+            $.post("{:url('member/registerCheckPassword')}",{"password":$(this).val()},function(data){
+                $("#password_span").empty();
+                $("#password_span").html(data.message);
+            });
+        });
+    });
+</script>
+
+<!--验证信息 确认密码-->
+<script>
+    $(function(){
+        $('#repassword').change(function(){
+            $.post("{:url('member/registerCheckRepassword')}",{"repassword":$(this).val(),"password":$("#password").val()},function(data){
+                $("#repassword_span").empty();
+                $("#repassword_span").html(data.message);
+            });
+        });
+    });
+</script>
+
+<script>
+	$(function(){
+		$('#submit').on('click',function(){
+		    $.post('{:url("Member/registerMember")}',$('form').serialize(),function(data){
+		      	if(data.status==0){
+		      	    alert(data.message);
+				}else{
+                    alert(data.message);
+                    window.location.href='{:url("Index/index")}';
+				}
+			})
+			return false;
+		})
+	})
+</script>
+</body>
+</html>

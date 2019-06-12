@@ -1,0 +1,70 @@
+<!-- Sidebar -->
+<div class="sidebar">
+
+    <!-- Info -->
+    <div class="info">
+        <div class="info_content d-flex flex-row align-items-center justify-content-start">
+            {if condition="$member_name eq null"}
+            <img src="__STATIC__/index/images/touxiang.jpg" alt="头像"  class="img-circle" style="width: 45px;margin-right: 20px;">
+            <a href="{:url('member/login')}" ><div class="dropdown_text">登录</div></a>
+            <a href="{:url('member/register')}"><div class="dropdown_text">注册</div></a>
+            {else /}
+            <div style="width: 55px;height: 55px;overflow: hidden">
+            <img src="{$member_img|default='__STATIC__/index/images/touxiang.jpg'}" alt="头像"  class="img-circle" style="width: 55px;margin-right: 20px;">
+            </div>
+            <div class="info_languages has_children">
+                <div  style="font-size:18px;color: white;margin-left: 20px">{$member_name}&nbsp&nbsp&nbsp<i class="fa fa-angle-down" aria-hidden="true"></i></div>
+                <ul>
+                    <li><a href="{:url('Member/information')}">
+                        <div class="dropdown_text">个人信息</div>
+                    </a></li>
+                    <li><a href="{:url('Member/orderPage')}">
+                        <div class="dropdown_text">我的订单</div>
+                    </a></li>
+                    <li><a href="{:url('member/logout')}">
+                        <div class="dropdown_text">退出</div>
+                    </a></li>
+                </ul>
+            </div>
+            {/if}
+        </div>
+    </div>
+
+    <!-- Logo -->
+    <div class="sidebar_logo" style="margin-top: 40px;">
+        <a href="{:url('index/index')}"><div>a<span>star</span></div></a>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar_nav">
+        <ul>
+            <li><a href="{:url('index/index')}">首 &nbsp&nbsp 页<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+            <li><a href="{:url('goods/index')}">所有商品<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+            <li><a href="{:url('goods/search',['search'=>'男'])}">男 &nbsp&nbsp 装<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+            <li><a href="{:url('goods/search',['search'=>'女'])}">女 &nbsp&nbsp 装<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+            <li><a href="{:url('goods/search',['search'=>'童'])}">童 &nbsp&nbsp 装<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+            <!--<li><a href="#">畅销商品<i class="fa fa-angle-right" aria-hidden="true"></i></a></li>-->
+        </ul>
+    </nav>
+
+    <!-- Search -->
+    <div class="search">
+        <form action="{:url('goods/search')}" method="get" class="search_form" id="sidebar_search_form">
+            <input type="text" name="search" class="search_input" placeholder="搜索" required="required" >
+            <button class="search_button" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+        </form>
+    </div>
+
+    <!-- Cart -->
+    <div class="cart d-flex flex-row align-items-center justify-content-start">
+
+        <!--{if condition="$member_name eq null"}-->
+        <div class="cart_icon" style="margin-left: 22px"><a href="{:url('shopping_cart/index')}">
+            <img src="__STATIC__/index/images/bag.png" alt="">
+            <div class="cart_num">{$cart_num}</div>
+        </a></div>
+        <a href="{:url('shopping_cart/index')}"> <div class="cart_price">{$cart_price} 元</div></a>
+
+
+    </div>
+</div>

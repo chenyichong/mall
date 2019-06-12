@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>个人信息</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="aStar Fashion Template Project">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="__STATIC__/index/styles/bootstrap-4.1.3/bootstrap.css">
+<link href="__STATIC__/index/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/index/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/index/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/index/plugins/OwlCarousel2-2.2.1/animate.css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/index/styles/product.css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/index/styles/product_responsive.css">
+
+<link href="__STATIC__/index/styles/bootstrap.css" rel='stylesheet' type='text/css' />
+
+</head>
+<style>
+	td:nth-child(1){width: 120px;text-align: right;padding-right: 20px;}
+	td:nth-child(2){width: 150px;text-align: left;font-size: 15px}
+	td{
+		padding: 15px 15px;
+		font-family: normal;
+	}
+	a{
+		font-size: 15px;
+	}
+</style>
+<body>
+
+
+<div class="super_container">
+
+	<!-- Header -->
+{include file="public/menu" /}
+	<!-- Home -->
+
+	<!-- Products -->
+
+	<div class="product">
+
+		<!-- Sorting & Filtering -->
+	{include file="public/grxx_top" /}
+		<!-- Product Content -->
+		<div class="section_container">
+			<div class="container">
+				<div class="row">
+						<table style="width:450px;margin: 70px;border: solid 1px;font-size: 17px;font-weight: lighter;color: black">
+							<form id="img_form" action="{:url('member/updataImg')}" enctype="multipart/form-data" method="post">
+								<tr>
+									<td></td>
+									<td style="text-align: center;height: 120px" >
+										<div style="overflow:hidden;border:solid 1px dimgray;height: 80px;width: 80px;margin-left: 35px" class="img-circle">
+										{if condition="$member.img eq null "}
+											<img src="__STATIC__/index/images/touxiang.jpg" alt="" class="img-circle" style="width: 70px">
+										{else /}
+											<img src="{$member.img|default='__STATIC__/index/images/touxiang.jpg'}" alt="" class="img-circle" style="width: 70px;margin-top: 5px">
+										{/if}
+										</div>
+										<input type="file" name="img" id="file" hidden>
+									</td>
+									<td>
+										<a href="#" onclick="selectImg()">上传头像</a>
+										<input type="submit" id="submit_img" hidden>
+									</td>
+								</tr>
+							</form>
+							<form action="">
+								<tr>
+									<td>
+										昵称:
+									</td>
+									<td>
+										<input type="text" name="name" id="name" value="{$member.name}" max="14" min="4" >
+									</td>
+									<td>
+										<a href="" id="submit_name">修改</a>
+									</td>
+								</tr>
+							</form>
+							<!--<form action="{url:('member/updataSex')}" method="post">-->
+							<form action="">
+								<tr>
+									<td>
+										性别:
+									</td>
+									<td>
+										{if condition="$member.sex eq '保密'"}
+										<span style="padding-right: 20px"><input type="radio" name="sex" id="sex" value="男" >男</span>
+										<span style="padding-right: 20px"><input type="radio" name="sex" id="sex" value="女" >女</span>
+										<span style="padding-right: 20px"><input type="radio" name="sex" id="sex" value="保密" checked>保密</span>
+										{elseif condition="$member.sex eq '男'" /}
+										<span style="padding-right: 20px"><input type="radio" name="sex" id="sex" value="男" checked>男</span>
+										<span style="padding-right: 20px"><input type="radio" name="sex" id="sex" value="女" >女</span>
+										<span><input type="radio" name="sex" id="sex" value="保密" >保密</span>
+										{elseif condition="$member.sex eq '女'" /}
+										<span style="padding-right: 20px"><input type="radio" name="sex" id="sex" value="男" >男</span>
+										<span style="padding-right: 20px"><input type="radio" name="sex" id="sex" value="女" checked>女</span>
+										<span><input type="radio" name="sex" id="sex" value="保密" >保密</span>
+										{/if}
+									</td>
+
+									<td>
+										<a href="" id="submit_sex">修改</a>
+										<!--<input type="submit" value="提交">-->
+									</td>
+								</tr>
+							</form>
+								<tr>
+									<td>邮箱:</td>
+									<td style="color: dimgrey">{$member.email}</td>
+									<td>
+
+									</td>
+								</tr>
+								<tr>
+									<td>手机:</td>
+									<td style="color: dimgrey">
+										{$member.phone}
+									</td>
+									<td>
+
+									</td>
+								</tr>
+							<form action="">
+								<tr>
+									<td>个性签名:</td>
+									<td>
+										<textarea name="sign" id="sign"  rows="3" style="width: 177px" >{$member.sign}</textarea>
+									</td>
+									<td>
+										<a href="" id="submit_sign">修改</a>
+									</td>
+								</tr>
+							</form>
+						</table>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="__STATIC__/index/js/jquery-3.2.1.min.js"></script>
+<script src="__STATIC__/layer/layer.js"></script>
+
+<!--<script src="__STATIC__/index/styles/bootstrap-4.1.3/popper.js"></script>-->
+<!--<script src="__STATIC__/index/styles/bootstrap-4.1.3/bootstrap.min.js"></script>-->
+<!--<script src="__STATIC__/index/plugins/greensock/TweenMax.min.js"></script>-->
+<!--<script src="__STATIC__/index/plugins/greensock/TimelineMax.min.js"></script>-->
+<!--<script src="__STATIC__/index/plugins/scrollmagic/ScrollMagic.min.js"></script>-->
+<!--<script src="__STATIC__/index/plugins/greensock/animation.gsap.min.js"></script>-->
+<!--<script src="__STATIC__/index/plugins/greensock/ScrollToPlugin.min.js"></script>-->
+<!--<script src="__STATIC__/index/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>-->
+<!--<script src="__STATIC__/index/plugins/easing/easing.js"></script>-->
+<!--<script src="__STATIC__/index/plugins/parallax-js-master/parallax.min.js"></script>-->
+<!--<script src="__STATIC__/index/plugins/Isotope/isotope.pkgd.min.js"></script>-->
+<!--<script src="__STATIC__/index/plugins/Isotope/fitcolumns.js"></script>-->
+<!--<script src="__STATIC__/index/js/product.js"></script>-->
+
+<!--修改个性签名-->
+<script>
+    $(function(){
+        $('#submit_sign').on('click',function(){
+            $.ajax({
+                type:"POST",
+                url:"{:url('member/updataSign')}",
+                data:$('#sign'),
+                dataType:"json",
+                success:function(data){
+                    layer.msg(data.message);
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
+<!--修改性别-->
+<script>
+	$(function(){
+	    $('#submit_sex').on('click',function () {
+			$.ajax({
+				type:'POST',
+				url:"{:url('member/updataSex')}",
+				data: $('form').serialize(),
+//				data: {sex:$('[name="sex"]:checked').val()},
+				dataType:'json',
+				success:function (data) {
+				    if(data.status ==1 ){
+                        layer.msg(data.message,{icon:6,time:1200,offset: '200px'});
+					}else{
+                        layer.msg(data.message,{time:1200,offset: '200px'});
+					}
+
+                }
+			})
+			return false;
+        })
+	})
+</script>
+
+<!--修改昵称-->
+<script>
+    $(function(){
+        $('#submit_name').on('click',function(){
+            $.ajax({
+                type:"POST",
+                url:"{:url('member/updataName')}",
+                data:$('#name'),
+                dataType:"json",
+                success:function(data){
+                    if(data.status==0){
+                        layer.msg(data.message,{icon:2,time:1200,offset: '200px'})
+					}else if(data.status==1){
+                        layer.msg(data.message,{icon:1,time:1200,offset: '200px'},function () {
+                            window.location.href='{:url("member/information")}';
+                        });
+					}else{
+                        layer.msg(data.message,{time:1200,offset: '200px'});
+					}
+
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
+<!--上传头像-->
+<script>
+	function  selectImg() {
+		$("#file").trigger("click");
+    }
+    $(document).ready(function() {
+        $("#file").change(function() {
+            $("#img_form").submit();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

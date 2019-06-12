@@ -1,0 +1,106 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+{include file="public/head" /}
+<body>
+<article class="cl pd-20">
+	<form action="" method="post" class="form form-horizontal" id="form-admin-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户昵称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" placeholder="{$name}" id="name" name="name" >
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户密码：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="password" class="input-text" autocomplete="off"  placeholder="修改密码" id="password" name="password">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>确认密码：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="password" class="input-text" autocomplete="off"  placeholder="确认新密码" id="repassword" name="repassword">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户手机：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" placeholder="{$phone}"  id="phone" name="phone">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户邮箱：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text"  name="email" id="email" placeholder="{$email}">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户等级：</label>
+			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+				{if condition="$role eq 1"}
+				<div class="radio-box">
+					<input name="role" type="radio" id="sex-1" checked>
+					<label for="sex-1">普通用户</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="sex-2" name="role">
+					<label for="sex-2">超级用户</label>
+				</div>
+				{else /}
+				<div class="radio-box">
+					<input name="role" type="radio" id="sex-1" >
+					<label for="sex-1">普通用户</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="sex-2" name="role" checked>
+					<label for="sex-2">超级用户</label>
+				</div>
+				{/if}
+
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+				<input id="submit" class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			</div>
+		</div>
+	</form>
+</article>
+
+{include file="public/footer" /}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__STATIC__/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="__STATIC__/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="__STATIC__/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+
+
+<!--提交修改-->
+<script>
+	$(function(){
+	    $("#submit").on('click',function(){
+	        $.ajax({
+				type:"POST",
+				url:"{:url('member/edit',['id'=>$id])}",
+				data:$('form').serialize(),
+				dataType:"json",
+				success:function (data) {
+					if(data.status == 1){
+                        alert(data.message);
+                        parent.location.reload();
+					}else{
+                        alert(data.message);
+					}
+                }
+			});
+	        return false;
+		})
+	});
+</script>
+
+
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>
